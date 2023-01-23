@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""First element of a sequence"""
 from typing import Sequence, Union, Any
 
 
