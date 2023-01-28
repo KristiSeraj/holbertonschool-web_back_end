@@ -12,6 +12,7 @@ class MRUCache(BaseCaching):
         self.deque = deque()
 
     def add_el(self, element):
+        """Adds element to the last index of list"""
         length_deque = len(self.deque)
         if self.deque[length_deque - 1] != element:
             self.deque.remove(element)
