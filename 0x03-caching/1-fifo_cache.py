@@ -20,6 +20,6 @@ class FIFOCache(BaseCaching):
 
     def get(self, key):
         """Retrieve the value of key found in cache_data dictionary"""
-        if key and self.cache_data[key]:
-            return self.cache_data[key]
+        if key and self.cache_data.get(key):
+            return self.cache_data.get(key)
         return None
