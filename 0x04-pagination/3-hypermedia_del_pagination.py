@@ -49,8 +49,8 @@ class Server:
 
         for i in range(index, next_index):
             if self.indexed_dataset().get(i):
-                data.append(self.indexed_dataset()[i])
-            i += 1
-            next_index += 1
+                data.append(self.indexed_dataset().get(i))
+            else:
+                next_index += 1
         return {'index': index, 'next_index': next_index,
                 'page_size': page_size, 'data': data}
