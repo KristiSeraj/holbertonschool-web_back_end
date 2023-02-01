@@ -7,5 +7,8 @@ import re
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """Filter datum that returns the log message obfuscated"""
-    message = re.sub(fr'{fields[0]}=\w+{separator}', fr'{fields[0]}={redaction}{separator}', message)
-    return re.sub(fr'{fields[1]}=\b\d+\/\d+\/\d+{separator}', fr'{fields[1]}={redaction}{separator}', message)
+    for el in fields:
+        message = re.sub(fr'{el}=[\w\d\/]+{separator}',
+                         fr'{el}={redaction}{separator}',
+                         message)
+    return message
