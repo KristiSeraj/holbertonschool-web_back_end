@@ -18,10 +18,12 @@ def filter_datum(fields: List[str], redaction: str,
 
 
 def get_logger() -> logging.Logger:
+    """Returns info logging"""
     logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
     stream_handler = logging.StreamHandler(sys.stdout)
     stream_handler.setFormatter(RedactingFormatter())
-    logging.basicConfig(level=logging.INFO, handlers=stream_handler)
+    logger.addHandler(stream_handler)
 
 
 class RedactingFormatter(logging.Formatter):
