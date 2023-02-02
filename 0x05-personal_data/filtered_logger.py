@@ -21,9 +21,9 @@ def get_logger() -> logging.Logger:
     """Returns info logging"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
-    stream_handler = logging.StreamHandler(sys.stdout)
-    stream_handler.setFormatter(RedactingFormatter())
-    logger.addHandler(stream_handler)
+    logger.propagate = False
+    logger = logging.StreamHandler(sys.stdout)
+    logger.setFormatter(RedactingFormatter())
 
 
 class RedactingFormatter(logging.Formatter):
