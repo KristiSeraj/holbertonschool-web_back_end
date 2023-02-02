@@ -3,7 +3,7 @@
 from typing import List
 import re
 import logging
-import sys
+
 
 PII_FIELDS = ("name", "email", "phone", "password", "ssn")
 
@@ -22,8 +22,9 @@ def get_logger() -> logging.Logger:
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
-    logger = logging.StreamHandler(sys.stdout)
-    logger.setFormatter(RedactingFormatter())
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
+    logger.addHandler(stream_handler)
 
 
 class RedactingFormatter(logging.Formatter):
