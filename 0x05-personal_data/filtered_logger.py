@@ -31,7 +31,9 @@ def get_logger() -> logging.Logger:
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """Connect to a secure database"""
-    if os.getenv('PERSONAL_DATA_DB_USERNAME') is None or os.getenv('PERSONAL_DATA_DB_HOST') is None:
+    userName = os.getenv('PERSONAL_DATA_DB_USERNAME')
+    localHost = os.getenv('PERSONAL_DATA_DB_HOST')
+    if userName is None or localHost is None:
         os.environ['PERSONAL_DATA_DB_USERNAME'] = "root"
         os.environ['PERSONAL_DATA_DB_HOST'] = "localhost"
     db = mysql.connector.connect(
