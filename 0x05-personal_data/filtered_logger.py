@@ -29,15 +29,19 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
 
-def get_db():
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Connect to a secure database"""
     os.environ['PERSONAL_DATA_DB_USERNAME'] = "root"
-    os.environ['PERSONAL_DATA_DB_PASSWORD'] = ""
     os.environ['PERSONAL_DATA_DB_HOST'] = "localhost"
     db = mysql.connector.connect(
         host=os.getenv('PERSONAL_DATA_DB_HOST'),
         user=os.getenv('PERSONAL_DATA_DB_USERNAME'),
-        password=os.getenv('PERSONAL_DATA_DB_PASSWORD')
+        password=os.getenv('PERSONAL_DATA_DB_PASSWORD'),
+        database=os.getenv('PERSONALD_DATA_DB_NAME')
     )
+
+    return db
+
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
