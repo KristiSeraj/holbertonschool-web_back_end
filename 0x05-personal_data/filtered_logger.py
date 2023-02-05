@@ -28,6 +28,8 @@ def get_logger() -> logging.Logger:
     stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
     logger.addHandler(stream_handler)
 
+    return logger
+
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """Connect to a secure database"""
@@ -63,3 +65,24 @@ class RedactingFormatter(logging.Formatter):
         """Filters values in incoming log records using filter_datum"""
         return filter_datum(self.fields, self.REDACTION,
                             super().format(record), self.SEPARATOR)
+
+
+def main():
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute('SELECT * FROM users;')
+    for row in cursor:
+        msg = f"name={row[0]}; email={row[1]}; " +\
+                f"phone={row[2]}; ssn={row[3]}; " +\
+                f"password={row[4]}; ip={row[5]}; " +\
+                f"last_login={row[6]}; user_agent={row[7]}; "
+        log_record = logging.LogRecord("user_data", logging.INFO, None,
+                                       None, msg, None, None)
+        formatter = RedactingFormatter(PII_FIELDS)
+        print(formatter.format(log_record))
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
