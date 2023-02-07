@@ -16,7 +16,7 @@ auth = None
 
 auth_type = os.environ.get('AUTH_TYPE')
 
-if auth:
+if auth_type == 'auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
 
@@ -44,14 +44,15 @@ def not_authorized(error) -> str:
 
 @app.before_request
 def before_request():
-    if auth:
-        requested_path = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
-        if request.path in requested_path:
-            auth.require_auth(request.path, requested_path)
-        if auth.authorization_header(request) is None:
-            abort(401)
-        if auth.current_user(request) is None:
-            abort(403)
+    if auth is None:
+        return
+    requested_path = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    if not auth.require_auth(request.path, requested_path):
+        return
+    if auth.authorization_header(request) is None:
+        abort(401)
+    if auth.current_user(request) is None:
+        abort(403)
 
 
 if __name__ == "__main__":
