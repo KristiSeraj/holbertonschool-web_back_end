@@ -19,6 +19,9 @@ auth_type = os.environ.get('AUTH_TYPE')
 if auth_type == 'auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
+else:
+    from api.v1.auth.basic_auth import BasicAuth
+    auth = BasicAuth()
 
 
 @app.errorhandler(404)
