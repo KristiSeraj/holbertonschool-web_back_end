@@ -44,9 +44,14 @@ def not_authorized(error) -> str:
 
 @app.before_request
 def before_request():
+    """
+    Function is only executed before each request
+    that is handled by a function of that blueprint.
+    """
     if auth is None:
         return
-    requested_path = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    requested_path = ['/api/v1/status/', '/api/v1/unauthorized/',
+                      '/api/v1/forbidden/']
     if not auth.require_auth(request.path, requested_path):
         return
     if auth.authorization_header(request) is None:
