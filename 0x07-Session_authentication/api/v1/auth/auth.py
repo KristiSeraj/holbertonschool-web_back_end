@@ -2,6 +2,7 @@
 """API authentication"""
 from flask import request
 from typing import List, TypeVar
+import os
 
 
 class Auth:
@@ -29,3 +30,10 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         """Return current user"""
         return None
+
+    def session_cookie(self, request=None):
+        """Returns a cookie value from a request"""
+        if request is None:
+            return None
+        my_session_id = os.environ.get('SESSION_NAME')
+        return request.cookies.get(my_session_id)
