@@ -2,6 +2,7 @@
 """Session auth"""
 from api.v1.auth.auth import Auth
 from uuid import uuid4
+from typing import TypeVar
 
 
 class SessionAuth(Auth):
@@ -21,3 +22,11 @@ class SessionAuth(Auth):
         if session_id is None and type(session_id) is not str:
             return None
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        try:
+            cookie = self.session_cookie(request)
+            user = self.user_id_for_session_id(cookie)
+            return user
+        except Exception:
+            return None
