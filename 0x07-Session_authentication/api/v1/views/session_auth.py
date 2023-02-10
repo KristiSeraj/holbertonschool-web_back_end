@@ -9,6 +9,7 @@ import os
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def login():
+    """Login request"""
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
