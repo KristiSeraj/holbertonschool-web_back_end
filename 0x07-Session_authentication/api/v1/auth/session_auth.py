@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Session auth"""
 from api.v1.auth.auth import Auth
-from uuid import uuid4, UUID
+from uuid import uuid4
 from typing import TypeVar
 from models.user import User
 
@@ -29,3 +29,16 @@ class SessionAuth(Auth):
         cookie = self.session_cookie(request)
         user = self.user_id_for_session_id(cookie)
         return User.get(user)
+
+    def destroy_session(self, request=None):
+        """Deletes user session"""
+        if request is None:
+            return False
+        if not self.session_cookie(request):
+            return False
+        cookie = self.session_cookie(request)
+        if not self.user_id_for_session_id(cookie):
+            return False
+        else:
+            del self.user_id_by_session_id[cookie]
+            return True
