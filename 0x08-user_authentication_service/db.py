@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-# from sqlalchemy.exc import InvalidRequestError, NoResultFound
+from sqlalchemy.exc import InvalidRequestError, NoResultFound
 
 from user import Base, User
 import logging
@@ -43,3 +43,13 @@ class DB:
         self._session.add(usr)
         self._session.commit()
         return usr
+
+    def find_user_by(self, **kwargs):
+        """
+        Returns the first row found in users table filtered by input
+        """
+        logging.disable(logging.INFO)
+        result = self._session.query(User).filter_by(**kwargs).first()
+        if result is None:
+            raise NoResultFound
+        return result
