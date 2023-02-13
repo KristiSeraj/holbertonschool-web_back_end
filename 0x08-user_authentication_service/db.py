@@ -5,10 +5,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from typing import TypeVar
+from sqlalchemy.exc import InvalidRequestError, NoResultFound
 
-from user import Base
-from user import User
+from user import Base, User
+import logging
 
 
 class DB:
@@ -18,6 +18,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
+        logging.disable(logging.INFO)
         self._engine = create_engine("sqlite:///a.db", echo=True)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
@@ -27,13 +28,28 @@ class DB:
     def _session(self) -> Session:
         """Memoized session object
         """
+        logging.disable(logging.INFO)
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
+        """
+        Adds user to the session
+        """
+        logging.disable(logging.INFO)
         usr = User(email=email, hashed_password=hashed_password)
         self._session.add(usr)
         self._session.commit()
         return usr
+
+    def find_user_by(self, **kwargs): 
+        """
+        Returns the first row found in users table filtered by input
+        """
+        logging.disable(logging.INFO)
+        result = self._session.query(User).filter_by(**kwargs)
+        if result is None:
+            raise NoResultFound
+        return result.first()
