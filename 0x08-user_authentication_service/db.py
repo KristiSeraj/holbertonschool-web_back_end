@@ -43,13 +43,3 @@ class DB:
         self._session.add(usr)
         self._session.commit()
         return usr
-
-    # def find_user_by(self, **kwargs): 
-    #     """
-    #     Returns the first row found in users table filtered by input
-    #     """
-    #     logging.disable(logging.INFO)
-    #     result = self._session.query(User).filter_by(**kwargs)
-    #     if result is None:
-    #         raise NoResultFound
-    #     return result.first()
