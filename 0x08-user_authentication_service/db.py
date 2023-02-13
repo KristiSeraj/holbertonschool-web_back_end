@@ -54,3 +54,10 @@ class DB:
         if result is None:
             raise NoResultFound
         return result
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        Locates the user to update and updates the user attributes
+        """
+        finded_user = self.find_user_by(**kwargs)
+        return finded_user
