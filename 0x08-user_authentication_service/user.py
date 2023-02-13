@@ -5,7 +5,9 @@ from sqlalchemy import Integer, String,  Column
 
 Base = declarative_base()
 
+
 class User(Base):
+    """User table"""
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
