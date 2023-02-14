@@ -59,5 +59,10 @@ class DB:
         """
         Locates the user to update and updates the user attributes
         """
-        finded_user = self.find_user_by(**kwargs)
-        return finded_user
+        finded_user = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            for i in range(len(dir(finded_user))):
+                if dir(finded_user)[i] == k:
+                    attr = dir(finded_user)[i]
+                    finded_user.attr = v
+        return
