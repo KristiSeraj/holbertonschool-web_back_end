@@ -47,3 +47,16 @@ class Auth:
                                       usr.hashed_password)
         except NoResultFound:
             return False
+
+    def create_session(self, email: str) -> str:
+        """Creates a session
+        """
+        try:
+            usr = self._db.find_user_by(email=email)
+            if usr:
+                usr_id = _generate_uuid()
+                print(usr_id)
+                self._db.update_user(usr.id, session_id=usr_id)
+                print(usr.session_id)
+        except NoResultFound:
+            return None
