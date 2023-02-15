@@ -65,4 +65,5 @@ class DB:
                 if dir(finded_user)[i] == k:
                     attr = dir(finded_user)[i]
                     finded_user.attr = v
-        return
+            else:
+                raise ValueError
