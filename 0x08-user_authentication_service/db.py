@@ -63,8 +63,9 @@ class DB:
         for k, v in kwargs.items():
             for i in range(len(dir(finded_user))):
                 if dir(finded_user)[i] == k:
-                    attr = dir(finded_user)[i]
-                    finded_user.attr = v
+                    setattr(finded_user, dir(finded_user)[i], v)
+                    self.__session.merge(finded_user)
+                    self.__session.commit()
                     return
             else:
                 raise ValueError
