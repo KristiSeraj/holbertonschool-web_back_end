@@ -9,7 +9,7 @@ AUTH = Auth()
 
 
 @app.route('/')
-def hello():
+def home():
     """Message to greet"""
     return jsonify({"message": "Bienvenue"})
 
@@ -53,7 +53,7 @@ def logout():
         usr = AUTH.get_user_from_session_id(session_id)
         if usr:
             AUTH.destroy_session(usr.id)
-            return redirect(url_for('/'))
+            return redirect(url_for('home'))
         else:
             abort(403)
 
