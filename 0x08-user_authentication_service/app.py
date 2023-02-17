@@ -95,7 +95,10 @@ def update_password():
         try:
             rst = AUTH.update_password(usr_rst_token, usr_password)
             if rst:
-                return jsonify({"email": usr_email, "message": "Password updated"})
+                return jsonify({"email": usr_email,
+                                "message": "Password updated"})
+            else:
+                abort(403)
         except ValueError:
             abort(403)
 
