@@ -39,7 +39,7 @@ def login():
             abort(401)
         else:
             session_id = AUTH.create_session(usr_email)
-            response = jsonify({"email": "<user email>",
+            response = jsonify({"email": usr_email,
                                 "message": "logged in"})
             response.set_cookie('session_id', session_id)
             return response
@@ -93,12 +93,11 @@ def update_password():
         usr_rst_token = request.form['reset_token']
         usr_password = request.form['new_password']
         try:
-            rst = AUTH.update_password(usr_rst_token, usr_password)
-            if rst:
-                return jsonify({"email": usr_email,
-                                "message": "Password updated"}), 200
+            AUTH.update_password(usr_rst_token, usr_password)
         except ValueError:
             abort(403)
+        return jsonify({"email": usr_email,
+                        "message": "Password updated"}), 200
 
 
 if __name__ == "__main__":
