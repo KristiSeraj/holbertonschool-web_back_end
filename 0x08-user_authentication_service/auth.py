@@ -81,11 +81,9 @@ class Auth:
         """
         try:
             usr = self._db.find_user_by(email=email)
-            if not usr:
-                raise ValueError
-            else:
+            if usr:
                 rst_token = _generate_uuid()
                 self._db.update_user(usr.id, reset_token=rst_token)
                 return usr.reset_token
         except Exception:
-            return None
+            raise ValueError
