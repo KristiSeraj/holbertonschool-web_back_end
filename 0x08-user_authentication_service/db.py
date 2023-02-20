@@ -61,11 +61,8 @@ class DB:
         """
         finded_user = self.find_user_by(id=user_id)
         for k, v in kwargs.items():
-            for i in range(len(dir(finded_user))):
-                if dir(finded_user)[i] == k:
-                    setattr(finded_user, dir(finded_user)[i], v)
-                    self.__session.merge(finded_user)
-                    self.__session.commit()
-                    return
+            if hasattr(finded_user, k):
+                setattr(finded_user, k, v)
             else:
                 raise ValueError
+        self.__session.commit()
