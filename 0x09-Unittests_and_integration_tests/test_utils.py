@@ -15,3 +15,12 @@ class TestAccessNestedMap(unittest.TestCase):
     def test_access_nested_map(self, mapping, path, result):
         """Access nested map method that checks for two inputs"""
         self.assertEqual(access_nested_map(mapping, path), result)
+
+    @parameterized.expand([
+        ({}, ("a",)),
+        ({"a": 1}, ("a", "b"))
+    ])
+    def test_access_nested_map_exception(self, mapping, path):
+        """Raises KeyError if key doesn't exist"""
+        with self.assertRaises(KeyError):
+            access_nested_map(mapping, path)
