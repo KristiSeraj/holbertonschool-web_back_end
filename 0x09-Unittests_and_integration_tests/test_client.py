@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 class TestGithubOrgClient(unittest.TestCase):
     """Test githuborgclient class"""
-    @parameterized([
+    @parameterized.expand([
         ('google'),
         ('abc')
     ])
