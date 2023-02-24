@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
+    """Return template 0-index.html which has hello world as h1"""
     return render_template('0-index.html')
 
 
