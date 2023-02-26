@@ -52,3 +52,9 @@ class TestGithubOrgClient(unittest.TestCase):
         """Has license method test"""
         check = GithubOrgClient.has_license(repo, license_key)
         self.assertEqual(check, result)
+
+@parameterized_class(
+    ('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos')
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    pass
