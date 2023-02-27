@@ -3,6 +3,7 @@
 from flask import Flask, render_template, request
 from flask_babel import Babel
 
+
 app = Flask(__name__)
 babel = Babel(app)
 
@@ -25,7 +26,7 @@ def hello():
 
 @babel.localeselector
 def get_locale():
-    """Determine teh best match for languages"""
+    """Determine the best match for languages"""
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
