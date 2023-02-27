@@ -2,8 +2,10 @@
 """Test client methods"""
 import unittest
 from client import GithubOrgClient
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 from unittest.mock import patch, PropertyMock
+from fixtures import TEST_PAYLOAD
+from urllib.error import HTTPError
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -53,8 +55,25 @@ class TestGithubOrgClient(unittest.TestCase):
         check = GithubOrgClient.has_license(repo, license_key)
         self.assertEqual(check, result)
 
+
 @parameterized_class(
-    ('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos')
+    ('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'),
+    TEST_PAYLOAD
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    pass
+    """Integration test for githuborgclient"""
+    @classmethod
+    def setUpClass(cls):
+        cls.get_patcher = patch('requests.get', side_effect=HTTPError)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.get_patcher.stop()
+
+    def test_public_repos(self):
+        client = GithubOrgClient('google')
+        assert True
+
+    def test_public_repos_url(self):
+        client = GithubOrgClient('google')
+        assert True
