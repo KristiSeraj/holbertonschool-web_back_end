@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Basic babel app"""
 from flask import Flask, render_template, request
-from flask_babel import Babel
+from flask_babel import Babel, gettext, _
 
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ app.config.from_object(Config)
 @app.route('/')
 def hello():
     """Return template 0-index.html which has hello world as h1"""
-    return render_template('3-index.html')
+    return render_template('3-index.html', title=gettext("home_title"), header=gettext("home_header"))
 
 
 @babel.localeselector
