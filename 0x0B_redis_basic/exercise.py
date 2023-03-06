@@ -18,7 +18,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable]):
+    def get(self, key: str, fn: Optional[Callable[[int, str], str]] = None):
         """Get the value of the key"""
         value = self._redis.get(key)
         if value is None:
