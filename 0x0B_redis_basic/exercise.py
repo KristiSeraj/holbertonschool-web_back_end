@@ -76,5 +76,5 @@ def replay(method: Callable):
 
     print(f"{method_name} was called {r.get(method_name).decode()} times:")
 
-    for key, value in list(zip(inputs, outputs)):
-        print(f"{method_name} (*{key.decode()}) -> {value.decode()}")
+    for key, value in zip(*[inputs, outputs]):
+        print(f"{method_name}(*{key.decode()}) -> {value.decode()}")
