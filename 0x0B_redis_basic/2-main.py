@@ -2,7 +2,7 @@
 """ Main file """
 
 Cache = __import__('exercise').Cache
-count_calls = __import__('exercise').count_calls
+
 
 cache = Cache()
 

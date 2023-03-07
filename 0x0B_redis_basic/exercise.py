@@ -64,3 +64,16 @@ class Cache:
     def get_int(self, key: str):
         """Int format using get method"""
         return self.get(key, int)
+
+
+def replay(method: Callable):
+    method_name = method.__qualname__
+    r = redis.Redis()
+
+    inputs = r.lrange(f"{method.__qualname__}:inputs", 0, -1)
+    outputs = r.lrange(f"{method.__qualname__}:outputs", 0, -1)
+
+    print(f"{method_name} was called {int(r.get(method.__qualname__))} times:")
+
+    for key, value in zip(*[inputs, outputs]):
+        print(f"{method_name} (*{key.decode()}) -> {value.decode()}")
