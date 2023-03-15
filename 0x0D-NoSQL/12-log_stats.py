@@ -19,7 +19,7 @@ def main():
     print(f"\tmethod PUT: {count({'method': 'PUT'})}")
     print(f"\tmethod PATCH: {count({'method': 'PATCH'})}")
     print(f"\tmethod DELETE: {count({'method': 'DELETE'})}")
-    print(f"{count({'path': '/status'})} status check")
+    print(f"{count({'method': 'GET', 'path': '/status'})} status check")
 
 
 if __name__ == "__main__":
