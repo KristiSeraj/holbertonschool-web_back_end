@@ -6,9 +6,13 @@ function countStudents(path) {
       if (err) {
         reject(new Error('Cannot load the database'));
       } else {
+        const rsp = [];
+        let msg;
         const lines = data.trim().split('\n');
         lines.shift();
+        msg = `Number of students: ${lines.length}`;
         console.log(`Number of students: ${lines.length}`);
+        rsp.push(msg);
 
         const fieldObj = {};
         for (const line of lines) {
@@ -26,9 +30,11 @@ function countStudents(path) {
           const st = lines.filter((line) => line.endsWith(field))
             .map((line) => line.split(',')[0])
             .join(', ');
+          msg = `Number of students in ${field}: ${count}. List: ${st}`;
           console.log(`Number of students in ${field}: ${count}. List: ${st}`);
+          rsp.push(msg);
         }
-        resolve(data);
+        resolve(rsp);
       }
     });
   });
