@@ -7,4 +7,8 @@ app.get('/', (req, res) => {
     console.log('API available on localhost port 7865')
 }).listen(7865);
 
+app.get('/cart/:id(\\d+)', (req, res) => {
+    res.send(`Payment methods for cart ${req.params.id}`)
+})
+
 module.exports = app;
