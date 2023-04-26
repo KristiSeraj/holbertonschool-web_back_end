@@ -9,7 +9,6 @@ function readDatabase(path) {
         const lines = data.trim().split('\n');
         lines.shift();
         const students = [];
-        
         for (const line of lines) {
           const fields = line.split(',');
           const fieldObj = {
@@ -18,7 +17,7 @@ function readDatabase(path) {
           };
           students.push(fieldObj);
         }
-        
+
         const result = students.reduce((acc, student) => {
           if (!acc[student.field]) {
             acc[student.field] = [];
@@ -26,12 +25,11 @@ function readDatabase(path) {
           acc[student.field].push(student.firstName);
           return acc;
         }, {});
-        
+
         resolve(result);
       }
-    })
-  })
+    });
+  });
 }
-
 
 export default readDatabase;
