@@ -1,12 +1,10 @@
-import express from 'express';
-import controllerRouting from './routes/index';
+import router from './routes/index';
+
+const express = require('express');
 
 const app = express();
 
-controllerRouting(app);
 
-app.listen(1245, () => {
-    //
-});
+app.use('/', router).listen(1245);
 
 export default app;

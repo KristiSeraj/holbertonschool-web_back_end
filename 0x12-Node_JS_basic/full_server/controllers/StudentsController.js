@@ -6,16 +6,17 @@ export default class StudentController {
     .then((fields) => {
       const students = [];
       let message;
+      students.push('This is the list of our students');
 
       for (const key of Object.keys(fields)) {
         message = `Number of students in ${key}: ${fields[key].length}. List ${fields[key].join(', ')}`;
         students.push(message);
       }
 
-      response.send(200, `${students.join('\n')}`);
+      response.status(200).send(`${students.join('\n')}`);
     })
     .catch(() => {
-      response.send(500, 'Cannot load the database');
+      response.status(500).send('Cannot load the database');
     });
   }
 
@@ -23,16 +24,16 @@ export default class StudentController {
     const { major } = request.params;
 
     if (major !== 'CS' && major !== 'SWE') {
-      response.send(500, 'Major parameter must be CS or SWE');
+      response.status(500).send('Major parameter must be CS or SWE');
     } else {
       readDatabase(db)
       .then((fields) => {
-        const studens = fields[major];
+        const studentsMajor = fields[major];
 
-        response.send(200, `List: ${students.join(', ')}`);
+        response.status(200).send(`List: ${studentsMajor.join(', ')}`);
       })
       .catch(() => {
-        response.send(500, 'Cannot load the database');
+        response.status(500).send('Cannot load the database');
       })
     }
   }
